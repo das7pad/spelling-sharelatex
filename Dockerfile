@@ -23,4 +23,6 @@ RUN sh ./install_deps.sh
 
 COPY --from=app /app /app
 
+RUN sh ./setup_env.sh
+
 USER node
