@@ -18,8 +18,8 @@ WORKDIR /app
 
 CMD ["node", "--expose-gc", "app.js"]
 
-COPY --from=app /app/install_deps.sh /app
-RUN sh ./install_deps.sh
+COPY install_deps.sh /app
+RUN sh /app/install_deps.sh
 
 COPY --from=app /app /app
 
