@@ -14,15 +14,16 @@ RUN npm run compile:all
 
 FROM node:10.15.3
 
-WORKDIR /app
-
 CMD ["node", "--expose-gc", "app.js"]
 
+WORKDIR /app
+
+
 COPY install_deps.sh /app
-RUN sh /app/install_deps.sh
+RUN /app/install_deps.sh
 
 COPY --from=app /app /app
 
-RUN sh ./setup_env.sh
+RUN /app/setup_env.sh
 
 USER node
