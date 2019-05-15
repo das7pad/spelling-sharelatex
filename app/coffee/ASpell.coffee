@@ -14,11 +14,14 @@ cacheFsPath = Path.resolve(settings.cacheDir, "spell.cache")
 cacheFsPathTmp = cacheFsPath + ".tmp"
 
 # load any existing cache
-try
-	oldCache = fs.readFileSync cacheFsPath
-	cache.load JSON.parse(oldCache)
-catch err
-	logger.log err:err, cacheFsPath:cacheFsPath, "could not load the cache file"
+fs.readFile cacheFsPath, (err, oldCache) ->
+	if err?
+		if err.code == 'ENOENT'
+			logger.log {cacheFsPath:cacheFsPath}, "cache file not found"
+		else
+			logger.log {err:err, cacheFsPath:cacheFsPath}, "could not load the cache file"
+	else
+		cache.load JSON.parse(oldCache)
 
 # write the cache every 30 minutes
 setInterval () ->
