@@ -26,10 +26,15 @@ setInterval () ->
 	fs.writeFile cacheFsPathTmp, dump, (err) ->
 		if err?
 			logger.log {err}, "error writing cache file"
-			fs.unlink cacheFsPathTmp
+			fs.unlink cacheFsPathTmp, (err) ->
+				if err?
+					logger.log err: err, "error deleting temporary cache file"
 		else
-			fs.rename cacheFsPathTmp, cacheFsPath
-			logger.log {len: dump.length, cacheFsPath:cacheFsPath}, "wrote cache file"
+			fs.rename cacheFsPathTmp, cacheFsPath, (err) ->
+				if err?
+					logger.log err: err, "error moving temporary cache file"
+				else
+					logger.log {len: dump.length, cacheFsPath:cacheFsPath}, "wrote cache file"
 , 30 * OneMinute
 
 class ASpellRunner
