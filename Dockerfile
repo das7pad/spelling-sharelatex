@@ -31,6 +31,9 @@ RUN /app/setup_env.sh
 
 USER node
 
+VOLUME \
+    /app/cache
+
 ARG RELEASE
 ARG COMMIT
 ENV RELEASE=${RELEASE} \
