@@ -14,13 +14,11 @@ COPY . /app
 
 RUN make build_app
 
-
 FROM node:10.16.0
 
 CMD ["node", "--expose-gc", "app.js"]
 
 WORKDIR /app
-
 
 COPY install_deps.sh /app
 RUN /app/install_deps.sh
