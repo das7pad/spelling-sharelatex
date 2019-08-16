@@ -2,7 +2,7 @@
 # Instead run bin/update_build_scripts from
 # https://github.com/das7pad/sharelatex-dev-env
 
-FROM node:10.16.0 as app
+FROM node:10.16.3 as app
 
 WORKDIR /app
 
@@ -14,7 +14,7 @@ COPY . /app
 
 RUN make build_app
 
-FROM node:10.16.0
+FROM node:10.16.3
 
 CMD ["node", "--expose-gc", "app.js"]
 
