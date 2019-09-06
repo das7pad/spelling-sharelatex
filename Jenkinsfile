@@ -35,10 +35,8 @@ pipeline {
         sh 'make build'
       }
     }
-
     stage('Linting') {
       steps {
-        sh 'DOCKER_COMPOSE_FLAGS="-f docker-compose.ci.yml" make format'
         sh 'DOCKER_COMPOSE_FLAGS="-f docker-compose.ci.yml" make lint'
       }
     }

@@ -26,12 +26,10 @@ clean_build:
 
 clean:
 
-	rm -f app.js
-	rm -rf app/js
-	rm -rf test/unit/js
-	rm -rf test/acceptance/js
+lint:
+	$(DOCKER_COMPOSE) run --rm test_unit npx eslint .
 
-test: test_unit test_acceptance
+test: lint test_unit test_acceptance
 
 test_unit:
 	$(DOCKER_COMPOSE) run --rm test_unit
@@ -39,6 +37,7 @@ test_unit:
 test_acceptance: test_clean test_acceptance_pre_run test_acceptance_run
 
 test_acceptance_run:
+	$(DOCKER_COMPOSE) run --rm test_acceptance
 
 clean_test_acceptance:
 
@@ -48,7 +47,6 @@ test_clean:
 test_acceptance_pre_run:
 
 build_app:
-	npm run compile:all
 
 build:
 	docker build --tag ci/$(PROJECT_NAME):$(BRANCH_NAME)-$(BUILD_NUMBER) \

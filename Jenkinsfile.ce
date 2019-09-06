@@ -91,6 +91,12 @@ pipeline {
           }
         }
 
+        stage('Linting') {
+          steps {
+            sh 'make lint'
+          }
+        }
+
         stage('Unit Tests') {
           steps {
             sh 'make test_unit'
@@ -102,6 +108,19 @@ pipeline {
           }
         }
 
+        stage('Acceptance Tests') {
+          steps {
+            sh 'make test_acceptance'
+          }
+          post {
+            always {
+              xunit (tools: [JUnit(pattern: 'output/acceptance.xml')])
+            }
+            cleanup {
+              sh 'make clean_test_acceptance'
+            }
+          }
+        }
       }
     }
 

@@ -1,5 +1,5 @@
 spelling
---language=coffeescript
+--language=es
 --node-version=10.16.3
 --acceptance-creds=None
 --dependencies=mongo,
