@@ -12,7 +12,7 @@ const Settings = require('settings-sharelatex')
 const logger = require('logger-sharelatex')
 logger.initialize('spelling')
 if ((Settings.sentry != null ? Settings.sentry.dsn : undefined) != null) {
-  logger.initializeErrorReporting(Settings.sentry.dsn)
+  logger.initializeErrorReporting(Settings.sentry.dsn, Settings.sentry.options)
 }
 metrics.memory.monitor(logger)
 
