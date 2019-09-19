@@ -39,7 +39,6 @@
     "underscore": "1.9.1"
   },
   "devDependencies": {
-    "bunyan": "^1.0.0",
     "chai": "",
     "eslint": "^6.0.1",
     "eslint-config-prettier": "^6.0.0",
