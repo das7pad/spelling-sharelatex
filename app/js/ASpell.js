@@ -36,8 +36,18 @@ setInterval(function() {
   const dump = JSON.stringify(cache.dump())
   return fs.writeFile(cacheFsPathTmp, dump, function(err) {
     if (err != null) {
-      logger.log({ err }, 'error writing cache file')
-      return fs.unlink(cacheFsPathTmp)
+      logger.error(
+        { err, cacheFsPathTmp, len: dump.length },
+        'error writing cache file'
+      )
+      fs.unlink(cacheFsPathTmp, err => {
+        if (err) {
+          logger.error(
+            { err, cacheFsPathTmp },
+            'error deleting temporary cache file'
+          )
+        }
+      })
     } else {
       fs.rename(cacheFsPathTmp, cacheFsPath, err => {
         if (err) {
