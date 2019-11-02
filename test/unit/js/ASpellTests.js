@@ -27,7 +27,8 @@ describe('ASpell', function() {
           gauge() {},
           inc() {}
         }
-      }
+      },
+      globals: { process }
     }))
   })
 
