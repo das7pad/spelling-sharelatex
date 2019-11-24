@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+set -ex
+
 echo 'APT::Default-Release "stretch";' >/etc/apt/apt.conf.d/default-release
 
 # The following aspell packages exist in Ubuntu but not Debian:
