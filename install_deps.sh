@@ -8,8 +8,8 @@ echo 'APT::Default-Release "buster";' >/etc/apt/apt.conf.d/default-release
 # aspell-ts, aspell-xh, aspell-zu
 echo "deb http://archive.ubuntu.com/ubuntu/ bionic main universe" > /etc/apt/sources.list.d/bionic.list
 apt-key adv --no-tty --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32
-# Need to install aspell-or, aspell-ta and aspell-te from testing (buster) as
-# broken in stable (stretch).
+
+# Need to install aspell-ta from unstable as it is broken/not updated in stable.
 echo "deb http://deb.debian.org/debian/ unstable main" > /etc/apt/sources.list.d/unstable.list
 
 apt-get update
@@ -57,8 +57,10 @@ apt-get install \
   aspell-ml \
   aspell-mr \
   aspell-nl \
+  aspell-no \
   aspell-nr \
   aspell-ns \
+  aspell-or \
   aspell-pa \
   aspell-pl \
   aspell-pt \
@@ -70,6 +72,8 @@ apt-get install \
   aspell-ss \
   aspell-st \
   aspell-sv \
+  aspell-ta=20040424-1-2 \
+  aspell-te \
   aspell-tl \
   aspell-tn \
   aspell-ts \
@@ -78,8 +82,6 @@ apt-get install \
   aspell-xh \
   aspell-zu \
   --yes
-
-apt-get install aspell-or=0.03-1-6 aspell-te=0.01-2-6 aspell-no=2.2-4 aspell-ta=20040424-1-2
 
 rm -rf /var/lib/apt/lists/* \
   /etc/apt/apt.conf.d/default-release \
