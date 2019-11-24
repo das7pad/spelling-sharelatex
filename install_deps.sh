@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -ex
 
+export DEBIAN_FRONTEND=noninteractive
+
 echo 'APT::Default-Release "buster";' >/etc/apt/apt.conf.d/default-release
 
 # The following aspell packages exist in Ubuntu but not Debian:
