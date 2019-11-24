@@ -29,7 +29,7 @@ apt-get install \
   aspell-cy \
   aspell-da \
   aspell-de \
-  aspell-de-alt \
+  aspell-de-1901 \
   aspell-el \
   aspell-en \
   aspell-eo \
