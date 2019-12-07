@@ -75,6 +75,7 @@ build_prod: clean_build_artifacts
 			app.js \
 			app/js \
 			config \
+			setup_env.sh \
 		> build_artifacts.tar.gz
 
 	docker build \
