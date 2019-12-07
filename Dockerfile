@@ -25,23 +25,3 @@ RUN /docker_cleanup.sh make build_app
 
 RUN /app/setup_env.sh
 USER node
-
-FROM base as prod
-
-RUN /docker_cleanup.sh npm ci --only=prod
-
-ADD build_artifacts.tar.gz /app
-
-RUN /app/setup_env.sh
-VOLUME \
-    /app/cache
-
-USER node
-
-ARG RELEASE
-ARG COMMIT
-ENV \
-    SERVICE_NAME="spelling" \
-    RELEASE=${RELEASE} \
-    SENTRY_RELEASE=${RELEASE} \
-    COMMIT=${COMMIT}
