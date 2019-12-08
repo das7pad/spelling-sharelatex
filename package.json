@@ -33,7 +33,6 @@
     "lru-cache": "^4.0.0",
     "metrics-sharelatex": "git+https://github.com/das7pad/metrics-sharelatex.git#866a23f83fcc3e812a70b4b4a88d445323e66988",
     "mongojs": "2.4.0",
-    "node-statsd": "0.0.3",
     "request": "^2.88.0",
     "settings-sharelatex": "^1.1.0",
     "underscore": "1.9.1"
