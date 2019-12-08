@@ -27,7 +27,6 @@
     "@overleaf/o-error": "^2.0.0",
     "async": "0.1.22",
     "body-parser": "^1.12.0",
-    "coffee-script": "^1.9.1",
     "express": "^4.12.1",
     "logger-sharelatex": "git+https://github.com/das7pad/logger-sharelatex.git#c9e043041b1f6a4c76ce36a3642cef64483e99f3",
     "lru-cache": "^4.0.0",
@@ -39,6 +38,7 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "coffee-script": "^1.9.1",
     "eslint": "^6.0.1",
     "eslint-config-prettier": "^6.0.0",
     "eslint-config-standard": "^12.0.0",
