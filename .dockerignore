@@ -45,7 +45,7 @@
 #######
 # app #
 !/app.js
-!/app
+!/app/js
 
 !/test/acceptance/config
 !/test/acceptance/fixtures
