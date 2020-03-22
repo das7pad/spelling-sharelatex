@@ -15,13 +15,14 @@ RUN /app/install_deps.sh
 
 COPY package.json package-lock.json /app/
 
-FROM base AS dev
+FROM base AS dev-deps
 
 RUN /docker_cleanup.sh npm ci
 
+FROM dev-deps as dev
+
 COPY . /app
 
-RUN /docker_cleanup.sh make build_app
-
 RUN /app/setup_env.sh
+
 USER node

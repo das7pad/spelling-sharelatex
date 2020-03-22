@@ -38,7 +38,7 @@
 
 ##############
 # app config #
-!/config/settings.defaults.js
+!/config/settings.defaults.*
 # app config #
 ##############
 

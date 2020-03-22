@@ -10,8 +10,6 @@ RUN /docker_cleanup.sh npm ci --only=prod
 ADD build_artifacts.tar.gz /app
 
 RUN /app/setup_env.sh
-VOLUME \
-    /app/cache
 
 USER node
 
