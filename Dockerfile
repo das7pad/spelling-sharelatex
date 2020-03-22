@@ -23,6 +23,8 @@ FROM dev-deps as dev
 
 COPY . /app
 
-RUN /app/setup_env.sh
+RUN DATA_DIRS="cache" \
+&&  mkdir -p ${DATA_DIRS} \
+&&  chown node:node ${DATA_DIRS}
 
 USER node

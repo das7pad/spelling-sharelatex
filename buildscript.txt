@@ -5,3 +5,4 @@ spelling
 --dependencies=mongo,
 --docker-repos=gcr.io/overleaf-ops
 --build-target=docker
+--data-dirs=cache,

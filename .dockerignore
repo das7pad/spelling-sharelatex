@@ -24,7 +24,6 @@
 # scripts #
 !/docker_cleanup.sh
 !/install_deps.sh
-!/setup_env.sh
 # scripts #
 ###########
 
