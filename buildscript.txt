@@ -1,9 +1,6 @@
 spelling
 --language=es
 --node-version=12.16.1
---acceptance-creds=None
 --dependencies=mongo,
---docker-repos=gcr.io/overleaf-ops
---build-target=docker
 --data-dirs=cache,
 --lint-runner-version=1.0.0
