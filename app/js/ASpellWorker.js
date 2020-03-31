@@ -90,7 +90,7 @@ class ASpellWorker {
         )
         this.callback = null
       } else {
-        logger.warn({ error: err, ...errInfo }, 'aspell worker error')
+        logger.warn({ error: err, errInfo }, 'aspell worker error')
       }
     })
     this.pipe.stdin.on('error', err => {
@@ -121,7 +121,7 @@ class ASpellWorker {
         logger.warn(
           {
             error: err,
-            ...errInfo
+            errInfo
           },
           'aspell worker error on stdin'
         )
