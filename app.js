@@ -11,15 +11,6 @@ metrics.initialize('spelling')
 const Settings = require('settings-sharelatex')
 const logger = require('logger-sharelatex')
 logger.initialize('spelling')
-if ((Settings.sentry != null ? Settings.sentry.dsn : undefined) != null) {
-  logger.initializeErrorReporting(Settings.sentry.dsn, Settings.sentry.options)
-}
-if (Settings.catchErrors) {
-  process.removeAllListeners('uncaughtException')
-  process.on('uncaughtException', function(err) {
-    logger.error({ err }, 'uncaughtException')
-  })
-}
 metrics.memory.monitor(logger)
 
 const SpellingAPIController = require('./app/js/SpellingAPIController')
