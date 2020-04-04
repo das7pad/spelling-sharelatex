@@ -17,7 +17,7 @@ const { promisify } = require('util')
 
 const OneMinute = 60 * 1000
 const opts = { max: 10000, maxAge: OneMinute * 60 * 10 }
-const cache = LRU(opts)
+const cache = new LRU(opts)
 
 const cacheFsPath = Path.resolve(settings.cacheDir, 'spell.cache')
 const cacheFsPathTmp = cacheFsPath + '.tmp'
@@ -32,7 +32,7 @@ try {
 }
 
 // write the cache every 30 minutes
-setInterval(function() {
+const cacheDump = setInterval(function() {
   const dump = JSON.stringify(cache.dump())
   return fs.writeFile(cacheFsPathTmp, dump, function(err) {
     if (err != null) {
@@ -196,3 +196,4 @@ ASpell.promises = promises
 module.exports = ASpell
 
 var WorkerPool = new ASpellWorkerPool()
+module.exports.cacheDump = cacheDump

@@ -31,6 +31,9 @@ describe('ASpell', function() {
       globals: { process }
     }))
   })
+  afterEach(function() {
+    clearInterval(this.ASpell.cacheDump)
+  })
 
   describe('a correctly spelled word', function() {
     beforeEach(function(done) {

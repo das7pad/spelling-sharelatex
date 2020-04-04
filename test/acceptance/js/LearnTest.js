@@ -27,15 +27,36 @@ const unlearnWord = word =>
     })
   })
 
+const getDict = () =>
+  request.get({
+    url: `/user/${USER_ID}`
+  })
+
 const deleteDict = () =>
   request.del({
     url: `/user/${USER_ID}`
   })
 
 describe('learning words', function() {
+  afterEach(async function() {
+    await deleteDict()
+  })
+
   it('should return status 204 when posting a word successfully', async function() {
     const response = await learnWord('abcd')
     expect(response.statusCode).to.equal(204)
+  })
+
+  it('should not learn the same word twice', async function() {
+    await learnWord('foobar')
+    const learnResponse = await learnWord('foobar')
+    expect(learnResponse.statusCode).to.equal(204)
+
+    const dictResponse = await getDict()
+    const responseBody = JSON.parse(dictResponse.body)
+    // the response from getlearnedwords filters out duplicates, so this test
+    // can succeed even if the word is stored twice in the database
+    expect(responseBody.length).to.equals(1)
   })
 
   it('should return no misspellings after a word is learnt', async function() {
