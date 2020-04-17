@@ -27,4 +27,6 @@ RUN DATA_DIRS="cache" \
 &&  mkdir -p ${DATA_DIRS} \
 &&  chown node:node ${DATA_DIRS}
 
+VOLUME /app/cache
+
 USER node

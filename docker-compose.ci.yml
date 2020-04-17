@@ -44,6 +44,9 @@ services:
       - test/acceptance/js
     volumes:
       - ./output:/home/node:z
+    tmpfs:
+      - /app/cache:uid=1000,gid=1000
 
   mongo:
     image: mongo
+    tmpfs: /data
