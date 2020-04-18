@@ -13,6 +13,8 @@ apt-key adv --no-tty --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F
 
 # Need to install aspell-ta from unstable as it is broken/not updated in stable.
 echo "deb http://deb.debian.org/debian/ unstable main" > /etc/apt/sources.list.d/unstable.list
+printf 'Package: aspell-ta\nPin: release a=unstable\nPin-Priority: 1337\n' \
+  > /etc/apt/preferences.d/aspell-ta-from-unstable
 
 apt-get update
 apt-get install \
@@ -74,7 +76,7 @@ apt-get install \
   aspell-ss \
   aspell-st \
   aspell-sv \
-  aspell-ta=20040424-1-2.1 \
+  aspell-ta \
   aspell-te \
   aspell-tl \
   aspell-tn \
