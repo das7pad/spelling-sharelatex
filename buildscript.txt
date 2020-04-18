@@ -3,4 +3,4 @@ spelling
 --node-version=12.16.1
 --dependencies=mongo,
 --data-dirs=cache,
---lint-runner-version=1.0.0
+--lint-runner-version=1.0.1
