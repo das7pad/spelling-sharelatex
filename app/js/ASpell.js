@@ -32,15 +32,15 @@ try {
 }
 
 // write the cache every 30 minutes
-const cacheDump = setInterval(function() {
+const cacheDump = setInterval(function () {
   const dump = JSON.stringify(cache.dump())
-  return fs.writeFile(cacheFsPathTmp, dump, function(err) {
+  return fs.writeFile(cacheFsPathTmp, dump, function (err) {
     if (err != null) {
       logger.error(
         { err, cacheFsPathTmp, len: dump.length },
         'error writing cache file'
       )
-      fs.unlink(cacheFsPathTmp, err => {
+      fs.unlink(cacheFsPathTmp, (err) => {
         if (err) {
           logger.error(
             { err, cacheFsPathTmp },
@@ -49,7 +49,7 @@ const cacheDump = setInterval(function() {
         }
       })
     } else {
-      fs.rename(cacheFsPathTmp, cacheFsPath, err => {
+      fs.rename(cacheFsPathTmp, cacheFsPath, (err) => {
         if (err) {
           logger.error({ err }, 'error renaming cache file')
         } else {
