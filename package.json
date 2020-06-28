@@ -24,7 +24,7 @@
   },
   "version": "0.1.4",
   "dependencies": {
-    "@overleaf/o-error": "^2.1.0",
+    "@overleaf/o-error": "^3.0.0",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "logger-sharelatex": "git+https://github.com/das7pad/logger-sharelatex.git#bef2078daae2433a43e61db306e301398199daa0",
