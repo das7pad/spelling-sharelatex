@@ -3,7 +3,7 @@ const request = require('./helpers/request')
 
 const USER_ID = 101
 
-const checkWord = (words, language) =>
+const checkWord = (words, language = 'en') =>
   request.post({
     url: `/user/${USER_ID}/check`,
     body: JSON.stringify({

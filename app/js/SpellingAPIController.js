@@ -2,6 +2,7 @@ const SpellingAPIManager = require('./SpellingAPIManager')
 const logger = require('logger-sharelatex')
 const metrics = require('metrics-sharelatex')
 const OError = require('@overleaf/o-error')
+const Settings = require('settings-sharelatex')
 
 function extractCheckRequestData(req) {
   const token = req.params ? req.params.user_id : undefined
@@ -21,6 +22,15 @@ module.exports = {
     metrics.inc('spelling-check', 0.1)
     const { token, wordCount } = extractCheckRequestData(req)
     logger.info({ token, wordCount }, 'running check')
+
+    const body = req.body
+    if (typeof body !== 'object' || typeof body.language !== 'string') {
+      return res.sendStatus(400).json({ misspellings: [] })
+    }
+    if (!Settings.supportedLanguages.includes(body.language.toLowerCase())) {
+      return res.status(422).json({ misspellings: [] })
+    }
+
     SpellingAPIManager.runRequest(token, req.body, function (error, result) {
       if (error != null) {
         logger.error(
