@@ -7,6 +7,7 @@
  */
 const metrics = require('metrics-sharelatex')
 metrics.initialize('spelling')
+const { URL } = require('url')
 
 const Settings = require('settings-sharelatex')
 const logger = require('logger-sharelatex')
@@ -31,6 +32,50 @@ server.post('/user/:user_id/unlearn', SpellingAPIController.unlearn)
 server.get('/status', (req, res) => res.send({ status: 'spelling api is up' }))
 
 server.get('/health_check', HealthCheckController.healthCheck)
+
+const jwt = require('express-jwt')
+const publicHost = new URL(Settings.siteUrl).host
+server.use(
+  '/jwt',
+  (req, res, next) => {
+    // only add CORS headers when not getting proxied through the main domain
+    if (req.headers.host !== publicHost) {
+      res.vary('Origin')
+      if (Settings.allowedOrigins.includes(req.headers.origin)) {
+        res.setHeader('Access-Control-Allow-Origin', req.headers.origin)
+      }
+      res.setHeader(
+        'Access-Control-Allow-Headers',
+        'Authorization,Content-Type'
+      )
+      res.setHeader('Access-Control-Max-Age', 3600)
+    }
+    if (req.method === 'OPTIONS') {
+      return res.sendStatus(204)
+    }
+    next()
+  },
+  jwt(
+    Object.assign(Settings.jwt.spelling.verify.options, {
+      secret: Settings.jwt.spelling.verify.secret
+    })
+  )
+)
+function injectUserId(req, res, next) {
+  // emulate the params from the '/user/:user_id/check' route
+  req.params.user_id = req.user.userId
+  next()
+}
+server.post('/jwt/spelling/check', injectUserId, SpellingAPIController.check)
+server.post('/jwt/spelling/learn', injectUserId, SpellingAPIController.learn)
+
+server.use(function (error, req, res, next) {
+  if (error.name === 'UnauthorizedError') {
+    // jwt
+    return res.sendStatus(401)
+  }
+  next(error)
+})
 
 const settings =
   Settings.internal && Settings.internal.spelling

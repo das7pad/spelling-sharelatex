@@ -18,6 +18,24 @@ module.exports = {
 
   healthCheckUserId: '53c64d2fd68c8d000010bb5f',
 
+  allowedOrigins: (
+    process.env.ALLOWED_ORIGINS ||
+    process.env.PUBLIC_URL ||
+    'http://localhost:3000'
+  ).split(','),
+  jwt: {
+    spelling: {
+      verify: {
+        options: {
+          algorithms: ['HS512']
+        },
+        secret: process.env.JWT_SPELLING_VERIFY_SECRET || 'jwt-spelling-secret'
+      }
+    }
+  },
+
+  siteUrl: process.env.PUBLIC_URL || 'http://localhost:3000',
+
   sentry: {
     dsn: process.env.SENTRY_DSN
   },
