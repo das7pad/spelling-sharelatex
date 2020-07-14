@@ -94,5 +94,15 @@ module.exports = {
       }
       res.send(words)
     })
+  },
+
+  getDicNoCache(req, res, next) {
+    const token = req.params.user_id
+    SpellingAPIManager.getDicNoCache(token, function (error, words) {
+      if (error) {
+        return next(OError.tag(error))
+      }
+      res.json(words)
+    })
   }
 }

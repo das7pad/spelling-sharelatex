@@ -74,6 +74,23 @@ const LearnedWordsManager = {
     })
   },
 
+  getLearnedWordsNoCache(userToken, callback) {
+    db.spellingPreferences.findOne({ token: userToken }, function (
+      error,
+      preferences
+    ) {
+      if (error) {
+        return callback(OError.tag(error))
+      }
+      let words = (preferences && preferences.learnedWords) || []
+      // remove duplicates
+      words = words.filter(
+        (value, index, self) => self.indexOf(value) === index
+      )
+      callback(null, words)
+    })
+  },
+
   deleteUsersLearnedWords(userToken, callback) {
     if (callback == null) {
       callback = () => {}

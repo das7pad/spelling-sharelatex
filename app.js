@@ -29,6 +29,11 @@ server.get('/user/:user_id', SpellingAPIController.getDic)
 server.post('/user/:user_id/check', SpellingAPIController.check)
 server.post('/user/:user_id/learn', SpellingAPIController.learn)
 server.post('/user/:user_id/unlearn', SpellingAPIController.unlearn)
+server.post('/v20200714/check', SpellingAPIController.check)
+server.del('/v20200714/user/:user_id', SpellingAPIController.deleteDic)
+server.get('/v20200714/user/:user_id', SpellingAPIController.getDicNoCache)
+server.post('/v20200714/user/:user_id/learn', SpellingAPIController.learn)
+server.post('/v20200714/user/:user_id/unlearn', SpellingAPIController.unlearn)
 server.get('/status', (req, res) => res.send({ status: 'spelling api is up' }))
 
 server.get('/health_check', HealthCheckController.healthCheck)
@@ -68,6 +73,12 @@ function injectUserId(req, res, next) {
 }
 server.post('/jwt/spelling/check', injectUserId, SpellingAPIController.check)
 server.post('/jwt/spelling/learn', injectUserId, SpellingAPIController.learn)
+server.post('/jwt/spelling/v20200714/check', SpellingAPIController.check)
+server.post(
+  '/jwt/spelling/v20200714/learn',
+  injectUserId,
+  SpellingAPIController.learn
+)
 
 server.use(function (error, req, res, next) {
   if (error.name === 'UnauthorizedError') {

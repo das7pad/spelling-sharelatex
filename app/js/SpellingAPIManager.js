@@ -51,6 +51,10 @@ const SpellingAPIManager = {
 
   getDic(token, callback) {
     return LearnedWordsManager.getLearnedWords(token, callback)
+  },
+
+  getDicNoCache(token, callback) {
+    return LearnedWordsManager.getLearnedWordsNoCache(token, callback)
   }
 }
 
