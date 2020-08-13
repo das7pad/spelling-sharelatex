@@ -16,31 +16,31 @@ metrics.memory.monitor(logger)
 
 const SpellingAPIController = require('./app/js/SpellingAPIController')
 const express = require('express')
-const server = express()
-metrics.injectMetricsRoute(server)
+const app = express()
+metrics.injectMetricsRoute(app)
 const bodyParser = require('body-parser')
 const HealthCheckController = require('./app/js/HealthCheckController')
 
-server.use(bodyParser.json({ limit: '2mb' }))
-server.use(metrics.http.monitor(logger))
+app.use(bodyParser.json({ limit: '2mb' }))
+app.use(metrics.http.monitor(logger))
 
-server.del('/user/:user_id', SpellingAPIController.deleteDic)
-server.get('/user/:user_id', SpellingAPIController.getDic)
-server.post('/user/:user_id/check', SpellingAPIController.check)
-server.post('/user/:user_id/learn', SpellingAPIController.learn)
-server.post('/user/:user_id/unlearn', SpellingAPIController.unlearn)
-server.post('/v20200714/check', SpellingAPIController.check)
-server.del('/v20200714/user/:user_id', SpellingAPIController.deleteDic)
-server.get('/v20200714/user/:user_id', SpellingAPIController.getDicNoCache)
-server.post('/v20200714/user/:user_id/learn', SpellingAPIController.learn)
-server.post('/v20200714/user/:user_id/unlearn', SpellingAPIController.unlearn)
-server.get('/status', (req, res) => res.send({ status: 'spelling api is up' }))
+app.delete('/user/:user_id', SpellingAPIController.deleteDic)
+app.get('/user/:user_id', SpellingAPIController.getDic)
+app.post('/user/:user_id/check', SpellingAPIController.check)
+app.post('/user/:user_id/learn', SpellingAPIController.learn)
+app.post('/user/:user_id/unlearn', SpellingAPIController.unlearn)
+app.post('/v20200714/check', SpellingAPIController.check)
+app.delete('/v20200714/user/:user_id', SpellingAPIController.deleteDic)
+app.get('/v20200714/user/:user_id', SpellingAPIController.getDicNoCache)
+app.post('/v20200714/user/:user_id/learn', SpellingAPIController.learn)
+app.post('/v20200714/user/:user_id/unlearn', SpellingAPIController.unlearn)
+app.get('/status', (req, res) => res.send({ status: 'spelling api is up' }))
 
-server.get('/health_check', HealthCheckController.healthCheck)
+app.get('/health_check', HealthCheckController.healthCheck)
 
 const jwt = require('express-jwt')
 const publicHost = new URL(Settings.siteUrl).host
-server.use(
+app.use(
   '/jwt',
   (req, res, next) => {
     // only add CORS headers when not getting proxied through the main domain
@@ -71,16 +71,16 @@ function injectUserId(req, res, next) {
   req.params.user_id = req.user.userId
   next()
 }
-server.post('/jwt/spelling/check', injectUserId, SpellingAPIController.check)
-server.post('/jwt/spelling/learn', injectUserId, SpellingAPIController.learn)
-server.post('/jwt/spelling/v20200714/check', SpellingAPIController.check)
-server.post(
+app.post('/jwt/spelling/check', injectUserId, SpellingAPIController.check)
+app.post('/jwt/spelling/learn', injectUserId, SpellingAPIController.learn)
+app.post('/jwt/spelling/v20200714/check', SpellingAPIController.check)
+app.post(
   '/jwt/spelling/v20200714/learn',
   injectUserId,
   SpellingAPIController.learn
 )
 
-server.use(function (error, req, res, next) {
+app.use(function (error, req, res, next) {
   if (error.name === 'UnauthorizedError') {
     // jwt
     return res.sendStatus(401)
@@ -97,7 +97,7 @@ const port = settings && settings.port ? settings.port : 3005
 
 if (!module.parent) {
   // application entry point, called directly
-  server.listen(port, host, function (error) {
+  app.listen(port, host, function (error) {
     if (error != null) {
       throw error
     }
@@ -105,4 +105,4 @@ if (!module.parent) {
   })
 }
 
-module.exports = server
+module.exports = app
