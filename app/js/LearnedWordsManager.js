@@ -1,7 +1,7 @@
 const db = require('./DB')
 const mongoCache = require('./MongoCache')
 const logger = require('logger-sharelatex')
-const metrics = require('metrics-sharelatex')
+const metrics = require('@overleaf/metrics')
 const { promisify } = require('util')
 const OError = require('@overleaf/o-error')
 
