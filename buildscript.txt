@@ -1,6 +1,6 @@
 spelling
 --language=es
---node-version=12.18.3
+--node-version=12.18.4
 --dependencies=mongo,
 --data-dirs=cache,
 --lint-runner-version=2.0.1
