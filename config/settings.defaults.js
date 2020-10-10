@@ -22,6 +22,19 @@ module.exports = {
 
   healthCheckUserId: '53c64d2fd68c8d000010bb5f',
 
+  ignoredMisspellings: process.env.IGNORED_MISSPELLINGS
+    ? process.env.IGNORED_MISSPELLINGS.split(',')
+    : [
+        'Overleaf',
+        'overleaf',
+        'ShareLaTeX',
+        'sharelatex',
+        'LaTeX',
+        'http',
+        'https',
+        'www'
+      ],
+
   allowedOrigins: (
     process.env.ALLOWED_ORIGINS ||
     process.env.PUBLIC_URL ||
