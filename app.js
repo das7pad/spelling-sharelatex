@@ -9,7 +9,7 @@ const metrics = require('@overleaf/metrics')
 metrics.initialize('spelling')
 const { URL } = require('url')
 
-const Settings = require('settings-sharelatex')
+const Settings = require('@overleaf/settings')
 const logger = require('logger-sharelatex')
 logger.initialize('spelling')
 metrics.memory.monitor(logger)
