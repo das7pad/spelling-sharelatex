@@ -33,6 +33,7 @@ app.post('/user/:user_id/unlearn', SpellingAPIController.unlearn)
 app.post('/v20200714/check', SpellingAPIController.check)
 app.delete('/v20200714/user/:user_id', SpellingAPIController.deleteDic)
 app.get('/v20200714/user/:user_id', SpellingAPIController.getDicNoCache)
+app.get('/v20200714/user/:user_id/dict', SpellingAPIController.getDicNoCache)
 app.post('/v20200714/user/:user_id/learn', SpellingAPIController.learn)
 app.post('/v20200714/user/:user_id/unlearn', SpellingAPIController.unlearn)
 app.get('/status', (req, res) => res.send({ status: 'spelling api is up' }))
@@ -75,6 +76,11 @@ function injectUserId(req, res, next) {
 app.post('/jwt/spelling/check', injectUserId, SpellingAPIController.check)
 app.post('/jwt/spelling/learn', injectUserId, SpellingAPIController.learn)
 app.post('/jwt/spelling/v20200714/check', SpellingAPIController.check)
+app.get(
+  '/jwt/spelling/v20200714/dict',
+  injectUserId,
+  SpellingAPIController.getDicNoCache
+)
 app.post(
   '/jwt/spelling/v20200714/learn',
   injectUserId,
