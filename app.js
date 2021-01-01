@@ -69,6 +69,7 @@ app.use(
         'Access-Control-Allow-Headers',
         'Authorization,Content-Type'
       )
+      res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS, POST')
       res.setHeader('Access-Control-Max-Age', 3600)
     }
     if (req.method === 'OPTIONS') {
