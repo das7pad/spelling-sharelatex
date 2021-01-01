@@ -40,10 +40,24 @@ app.get('/status', (req, res) => res.send({ status: 'spelling api is up' }))
 
 app.get('/health_check', HealthCheckController.healthCheck)
 
+// direct user access with jwt auth
 const jwt = require('express-jwt')
 const publicHost = new URL(Settings.siteUrl).host
+const jwtRouter = express.Router()
+function asUser(req, res, next) {
+  // emulate the params from the '/user/:user_id/check' route
+  req.params.user_id = req.user.userId
+  next()
+}
+
+jwtRouter.post('/check', asUser, SpellingAPIController.check)
+jwtRouter.post('/learn', asUser, SpellingAPIController.learn)
+jwtRouter.post('/v20200714/check', SpellingAPIController.check)
+jwtRouter.get('/v20200714/dict', asUser, SpellingAPIController.getDicNoCache)
+jwtRouter.post('/v20200714/learn', asUser, SpellingAPIController.learn)
+
 app.use(
-  '/jwt',
+  '/jwt/spelling',
   (req, res, next) => {
     // only add CORS headers when not getting proxied through the main domain
     if (req.headers.host !== publicHost) {
@@ -66,34 +80,16 @@ app.use(
     Object.assign(Settings.jwt.spelling.verify.options, {
       secret: Settings.jwt.spelling.verify.secret
     })
-  )
-)
-function injectUserId(req, res, next) {
-  // emulate the params from the '/user/:user_id/check' route
-  req.params.user_id = req.user.userId
-  next()
-}
-app.post('/jwt/spelling/check', injectUserId, SpellingAPIController.check)
-app.post('/jwt/spelling/learn', injectUserId, SpellingAPIController.learn)
-app.post('/jwt/spelling/v20200714/check', SpellingAPIController.check)
-app.get(
-  '/jwt/spelling/v20200714/dict',
-  injectUserId,
-  SpellingAPIController.getDicNoCache
-)
-app.post(
-  '/jwt/spelling/v20200714/learn',
-  injectUserId,
-  SpellingAPIController.learn
-)
-
-app.use(function (error, req, res, next) {
-  if (error.name === 'UnauthorizedError') {
-    // jwt
-    return res.sendStatus(401)
+  ),
+  jwtRouter,
+  function (error, req, res, next) {
+    if (error.name === 'UnauthorizedError') {
+      // jwt auth failure
+      return res.sendStatus(401)
+    }
+    next(error)
   }
-  next(error)
-})
+)
 
 const settings =
   Settings.internal && Settings.internal.spelling
